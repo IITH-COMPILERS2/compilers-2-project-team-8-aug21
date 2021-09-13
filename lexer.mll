@@ -65,6 +65,7 @@ rule token = parse
 | "graph"                           { GRAPH     }
 | "numset"                          { NUMSET    }
 | "strset"                          { STRSET    }
+| "struct"                          { STRUCT    }
 (*                 Keywords                  *)
 | "link"                            { LINK      }
 | "if"                              { IF        }
@@ -76,26 +77,21 @@ rule token = parse
 | "case"                            { CASE      }
 | "default"                         { DEFAULT   }
 | "const"                           { CONST     }
-| "new"                             { NEW       }
-| "del"                             { DEL       }
-| "struct"                          { STRUCT    }
-| "public"                          { PUBLIC    }
-| "private"                         { PRIVATE   }
 (*                 Literals                  *)
 | "true"                            { TRUE      }
 | "false"                           { FALSE     }
 | "NULL"                            { NULL      }
-| digit+ as lxm                     { INT_L(int_of_string lxm)}
-|                                   { FLOAT_L()}
-|
-|
+| ['-'']?digit+ as lxm              { INT_L(int_of_string lxm)}
+| ['-']?digit+['.']digit+ as lxm    {FLOAT_L(float_of_string lxm)}
+| '"' (([^ '"'] | "\\\"")* as lxm) '"' { STRING_L(lxm) }
+| ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']*  as lxm { ID(lxm) }
 | eof      { EOF }
-| _ as ch { raise (Failure("illegal character detected " ^ Char.escaped ch)) }  (* Raising error for unidentified character*)
+| _ as ch { raise (SynataxError("Unexpected character detected " ^ Char.escaped ch)) }  (* Raising error for unidentified character*)
 
 and ml_comment = parse
   "*$"                              { token lexbuf }
   | _                               { ml_comment lexbuf }
 
 and sl_comment = parse
-  ['\n']                            { token lexbuf }
+  "\n"                            { token lexbuf }
   | _                               { sl_comment lexbuf }
