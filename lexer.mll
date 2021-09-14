@@ -30,6 +30,7 @@ rule token = parse
 | ']'                                  { RBRACK }
 | ';'                                  { SEMICOLON }
 | '.'                                  { DOT }
+| ':'                                  { COLON }
 | ','                                  { COMMA }
 | "#" (letter(letter|digit)* as tag)   { TAG_BEGIN(tag) } 
 | "#!" (letter(letter|digit)* as tag)  { TAG_END(tag)   }   
