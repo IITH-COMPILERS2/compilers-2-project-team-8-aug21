@@ -201,13 +201,73 @@ and sl_comment = parse
           | LBRACK -> printf "LBRACK "
           | RBRACK -> printf "RBRACK "
           | SEMICOLON -> printf "SEMICOLON "
-          | DOT -> printf "DOT "
-          | COMMA -> printf "COMMA "
-(*          | TAG_BEGIN(str) -> printf "TAG_BEGIN  %s  "
-          | TAG_END(str) -> printf "TAG_END  %s   " *)
-          (*  *)
+          | DOT    -> printf "DOT "
+          | COLON  -> printf "COLON "
+          | COMMA  -> printf "COMMA "
+          | TAG_BEGIN(str) -> printf "TAG_BEGIN  %s  " str
+          | TAG_END(str)   -> printf "TAG_END  %s   " str
+          (*                 Operators                 *)
+          |  UNEG     -> printf "UNEG "
+          |  INCR     -> printf "INCR "
+          |  DECR     -> printf "DECR "
+          |  LSHIFT   -> printf "LSHIFT "
+          |  RSHIFT   -> printf "RSHIFT "
+          |  EXPONENT -> printf "EXPONENT "
+          |  MODULO   -> printf "MODULO "
+          |  MULTIPLY -> printf "MULTIPLY "
+          |  DIVIDE   -> printf "DIVIDE "
+          |  PLUS     -> printf "PLUS "
+          |  MINUS    -> printf "MINUS "
+          |  UNION    -> printf "UNION "
+          |  INTERSECT-> printf "INTERSECT "
+          |  SETDIFF  -> printf "SETDIFF "
+          |  GT       -> printf "GT "
+          |  GTE      -> printf "GTE "
+          |  LT       -> printf "LT "
+          |  LTE      -> printf "LTE "
+          |  EQUAL    -> printf "EQUAL "
+          |  NOT_EQUAL-> printf "NOT_EQUAL "
+          |  AND      -> printf "AND "
+          |  OR       -> printf "OR "
+          |  ASSIGN   -> printf "ASSIGN "
+          |  MULT_ASSIGN  -> printf "MULT_ASSIGN "
+          |  DIV_ASSIGN   -> printf "DIV_ASSIGN "
+          |  PLUS_ASSIGN  -> printf "PLUS_ASSIGN "
+          |  MINUS_ASSIGN -> printf "MINUS_ASSIGN "
+          |  EXP_ASSIGN   -> printf "EXP_ASSIGN "
+          |  MOD_ASSIGN   -> printf "MOD_ASSIGN "
+          (*                 Datatypes                 *)
+          |  VOID      -> printf "VOID "
+          |  BOOL      -> printf "BOOL "
+          |  INT       -> printf "INT "
+          |  FLOAT     -> printf "FLOAT "
+          |  STRING    -> printf "STRING "
+          |  MATRIX    -> printf "MATRIX "
+          |  GRAPH     -> printf "GRAPH "
+          |  NUMSET    -> printf "NUMSET "
+          |  STRSET    -> printf "STRSET "
+          |  STRUCT    -> printf "STRUCT "
+          (*                 Keywords                  *)
+          |  LINK      -> printf "LINK "
+          |  IF        -> printf "IF "
+          |  ELSE      -> printf "ELSE "
+          |  LOOP      -> printf "LOOP "
+          |  BREAK     -> printf "BREAK "
+          |  CONTINUE  -> printf "CONTINUE "
+          |  RETURN    -> printf "RETURN "
+          |  CASE      -> printf "CASE "
+          |  DEFAULT   -> printf "DEFAULT "
+          |  CONST     -> printf "CONST "
+          (*                  Literals                 *)
+          |  TRUE      -> printf "TRUE "
+          |  FALSE     -> printf "FALSE "
+          |  NULL      -> printf "NULL "
+          |  INT_L(x)     -> printf "INTEGER:%d " x
+          |  FLOAT_L(x)   -> printf "FLOAT:%f " x
+          |  STRING_L(x)  -> printf "STRING:%s " x
+          |  ID(x)        -> printf "IDENTIFIER:%s " x 
         done
-      with EOF -> exit 0
+      with EOF -> printf "\n"; exit 0
     end ;;
     main () ;;
 }
