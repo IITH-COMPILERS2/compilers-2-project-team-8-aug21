@@ -51,7 +51,6 @@
     | VOID
     | BOOL
     | INT
-    | LONG
     | FLOAT
     | STRING 
     | MATRIX
@@ -143,7 +142,6 @@ rule token = parse
 | "void"                               { VOID      }
 | "bool"                               { BOOL      }
 | "int"                                { INT       }
-| "long"                               { LONG      }
 | "float"                              { FLOAT     }
 | "string"                             { STRING    }
 | "matrix"                             { MATRIX    }
@@ -189,7 +187,10 @@ and sl_comment = parse
 {
     let main () = begin
       try 
-        let lexbuf = from_channel stdin in
+        (*let lexbuf = from_channel stdin in*)
+        let fileName = Sys.argv.(1) in
+        let handler = open_in fileName in 
+        let lexbuf = from_channel handler in
         while true do 
           let inp_token = token lexbuf in 
           match inp_token with 
