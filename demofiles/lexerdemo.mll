@@ -135,12 +135,6 @@ rule token = parse
 | "AND"                                { AND       }
 | "OR"                                 { OR        }
 | '='                                  { ASSIGN    }
-| "*="                                 { MULT_ASSIGN  }
-| "/="                                 { DIV_ASSIGN   }
-| "+="                                 { PLUS_ASSIGN  }
-| "-="                                 { MINUS_ASSIGN }
-| "^="                                 { EXP_ASSIGN   }
-| "%="                                 { MOD_ASSIGN   }
 (*                 Datatypes                 *)
 | "void"                               { VOID      }
 | "bool"                               { BOOL      }
@@ -178,7 +172,7 @@ rule token = parse
 
 and ml_comment = parse
   "*$"                                 { token lexbuf }
-| "\n"                                 { incr linecounter ; token lexbuf }
+| "\n"                                 { incr linecounter ; ml_comment lexbuf }
 | eof                                  { syntax_error (lexbuf) ("Expected '*$' before EOF") (!linecounter) }  
 | _                                    { ml_comment lexbuf }
 
