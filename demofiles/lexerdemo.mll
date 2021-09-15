@@ -6,6 +6,8 @@
     open Printf      (* error reporting *)
     open Lexing
 
+    let linecounter = ref 1
+
     type token = 
     | LBRACE
     | RBRACE 
@@ -80,11 +82,11 @@
 
     exception SyntaxError of string
     
-    let error character message start = 
-    sprintf "line %d: %s : %s" start.pos_lnum character message
+    let error character message lnum = 
+    sprintf "\nline %d: %s : %s" lnum character message
     
-    let syntax_error lexbuf message = 
-    raise ( SyntaxError(error (lexeme lexbuf) (message) (lexeme_start_p lexbuf)) )
+    let syntax_error lexbuf message lnum = 
+    raise ( SyntaxError(error (lexeme lexbuf) (message) (lnum)) )
 
 }
 
@@ -92,9 +94,10 @@ let letter  = ['A'-'Z' 'a'-'z']
 let digit = ['0'-'9']
 
 rule token = parse
-    [' ' '\t' '\r' '\n']               { token lexbuf }        (* whitespace *)
-(*| "$*"                                 { ml_comment lexbuf }   (* multi-line comments *)  *)
-(*| "$"                                  { sl_comment lexbuf }   (* single-line comments *)  *)
+  [' ' '\t' '\r']                      { token lexbuf }        (* whitespace *)
+| ['\n']                               { incr linecounter ; token lexbuf }
+| "$*"                                 { ml_comment lexbuf }   (* multi-line comments *)  
+| "$"                                  { sl_comment lexbuf }   (* single-line comments *) 
 (*                   Syntax                  *)
 | '{'                                  { LBRACE }
 | '}'                                  { RBRACE }
@@ -168,20 +171,21 @@ rule token = parse
 | ['-']?digit+['.']digit+ as lxm       { FLOAT_L(float_of_string lxm)}
 | '"' (([^ '"'] | "\\\"")* as lxm) '"' { STRING_L(lxm) }
 | ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']*  as lxm { ID(lxm) }
-| ['0'-'9' '_']['a'-'z' 'A'-'Z' '0'-'9' '_']*      as lxm { syntax_error (lexbuf) ("Invalid identifier name " ^ lxm ^ "\n") }
+| ['0'-'9' '_']['a'-'z' 'A'-'Z' '0'-'9' '_']*      as lxm { syntax_error (lexbuf) ("Invalid identifier name " ^ lxm) (!linecounter) }
 | eof                                  { raise EOF }
 (* Raising error for unidentified character*)
-| _                                    { syntax_error (lexbuf) ("Unexpected character detected\n") }  
+| _                                    { syntax_error (lexbuf) ("Unexpected character detected") (!linecounter) }  
 
 and ml_comment = parse
   "*$"                                 { token lexbuf }
-(*  | eof                                { syntax_error (lexbuf) ("Expected '*$' before EOF\n")}  *)
-  | _                                  { ml_comment lexbuf }
+| "\n"                                 { incr linecounter ; token lexbuf }
+| eof                                  { syntax_error (lexbuf) ("Expected '*$' before EOF") (!linecounter) }  
+| _                                    { ml_comment lexbuf }
 
 and sl_comment = parse
-  "\n"                                 { token lexbuf }
-  | eof                                { raise EOF }
-  | _                                  { sl_comment lexbuf }
+  "\n"                                 { incr linecounter ; token lexbuf }
+| eof                                  { raise EOF }
+| _                                    { sl_comment lexbuf }
 
 
 {
@@ -204,8 +208,8 @@ and sl_comment = parse
           | DOT    -> printf "DOT "
           | COLON  -> printf "COLON "
           | COMMA  -> printf "COMMA "
-          | TAG_BEGIN(str) -> printf "TAG_BEGIN  %s  " str
-          | TAG_END(str)   -> printf "TAG_END  %s   " str
+          | TAG_BEGIN(str) -> printf "TAG_BEGIN: %s  " str
+          | TAG_END(str)   -> printf "TAG_END: %s   " str
           (*                 Operators                 *)
           |  UNEG     -> printf "UNEG "
           |  INCR     -> printf "INCR "
