@@ -68,7 +68,6 @@ rule token = parse
 | "void"                               { VOID      }
 | "bool"                               { BOOL      }
 | "int"                                { INT       }
-| "long"                               { LONG      }
 | "float"                              { FLOAT     }
 | "string"                             { STRING    }
 | "matrix"                             { MATRIX    }
