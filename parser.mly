@@ -41,6 +41,7 @@ start:
 	(*nothing*)							{	[] }
 	|start fdecl   				{($2 :: $1)}
 	
+	
 fdecl: Type ID LPAREN Args RPAREN LBRACE stmt_list RBRACE 
 	{{
 		Type = $1;
@@ -48,8 +49,8 @@ fdecl: Type ID LPAREN Args RPAREN LBRACE stmt_list RBRACE
 		args = $4;
 	}}
 
-Args: (*nothing*)
-    	| Type ID
+Args: (*nothing*)			{ } 
+    	| Type ID			{ Type = $1; v_name = $2 }
 	| Type ID COMMA Args
 
 var_decl: Sc_specifier Type id_list SEMICOLON
@@ -59,6 +60,9 @@ var_decl: Sc_specifier Type id_list SEMICOLON
 
 matrix_decl:
 MATRIX MATRIX_LITERAL ASSIGN LBRACK set_list RBRACK
+{{
+	
+}}
 
 set_decl:
 	NUMSET SET_LITERAL ASSIGN LBRACK set RBRACK
@@ -91,7 +95,7 @@ id_list: ID
         | id_list COMMA ID
 
 Sc_specifier: (*nothing*)
-	|CONST 
+	| CONST 
 	| STATIC 
 	| RENAME 
 
@@ -154,9 +158,7 @@ expr: VOIDLIT 					{ }
     | UNEG expr 		{ Unop(Uneg, $2) }
     | expr assgn_op expr %prec ASSIGN    	
 	
-Decls: /*nothing*/
-        | Decls var_decl
-        | Decls fun_decl
+
 
 	
 	
