@@ -1,4 +1,4 @@
-Editing
+
 %{ open Ast 
 let parse_error s =
       begin
@@ -19,7 +19,7 @@ let parse_error s =
 %token SEMICOLON COLON LPAREN RPAREN LBRACE RBRACE LBRACK RBRACK COMMA DOT TAG_BEGIN TAG_END
 %token PLUS MINUS MULTIPLY DIVIDE MODULO EXPONENT UNEG INCR DECR LSHIFT RSHIFT UNION INTERSECT SETDIFF  
 %token ASSIGN MULT_ASSIGN DIV_ASSIGN PLUS_ASSIGN MINUS_ASSIGN EXP_ASSIGN MOD_ASSIGN EQUAL NOT_EQUAL GT GTE LT LTE 
-%token IF ELSE LOOP RETURN LINK BREAK CONTINUE CASE DEAULT CONST
+%token IF ELSE LOOP RETURN LINK BREAK CONTINUE CASE DEAULT CONST STATIC RENAME
 %token INT FLOAT STRING BOOL VOID MATRIX GRAPH NUMSET STRSET STRUCT 
 %token AND OR NOT TRUE FALSE NULL
 %token <string> ID 
@@ -44,12 +44,9 @@ let parse_error s =
 %start start
 %type <Ast.program> start
 
-    // grammar rules
-
 %%
 
-start:
-	(*nothing*)							{	[] }
+start:		/* nothing */							{	[] }
 	| start decls   				{($2 :: $1)}
 
 decls:
@@ -65,40 +62,42 @@ fdecl: typ ID LPAREN args RPAREN LBRACE var_decl_list stmt_list RBRACE
 		body = List.rev $8;
 	}}
 
-args: (*nothing*)			{ [] } 
+args: /* nothing */			{ [] } 
     	| arg				{ $1}
 		| args COMMA arg   	{ $3 :: $1}
 
 arg: sc_specifier typ ID				{{ sc = $1 ;typ = $2; vname = $3 }}
 		
 
-var_decl: sc_specifier typ id_list SEMICOlLON {{ sc = $1 ;typ = $2; vnames = List.rev $3 }}
+var_decl: sc_specifier typ id_list SEMICOLON {{ sc = $1 ;typ = $2; vnames = List.rev $3 }}
 	| matrix_decl		{ $1}
 	| graph_decl		{ $1}
 	| set_decl			{ $1}
 
-var_decl_list:	(* nothing *)   { [] }
-  	| var_decl_list vdecl { $2 :: $1 }
 
 
-matrix_decl:	MATRIX ID ASSIGN LBRACK set_list RBRACK		
+var_decl_list:	/* nothing */   { [] }
+  	| var_decl_list var_decl { $2 :: $1 }
+
+
+matrix_decl: MATRIX ID ASSIGN LBRACK set_list RBRACK		
 			{{
-				type = $1;
+				typ = Matrix;
 				mname = $2;
-				sets = $5;	
+				sets = $5;
 			}}
 
 set_decl:
 	  NUMSET ID ASSIGN LBRACK set RBRACK
 	{{
-		type = $1;
+		typ = Numset;
 		sname = $2;
 		set = $5;
 	}}
 
 	| STRSET ID ASSIGN LBRACK set RBRACK
 	{{
-		type = $1;
+		typ = Strset;
 		sname = $2;
 		set = $5;
 	}}
@@ -106,21 +105,21 @@ set_decl:
 graph_decl:
 	GRAPH ID ASSIGN LBRACK edge_list RBRACK
 	{{
-		type = $1;
+		typ = Graph;
 		gname = $2;
 		edges = $5;
 	}}
 
 set_list:
 	 set 							{ [$1] }
-	|set_list COMMA set 			{ $2 :: $1 }
+	|set_list COMMA set 			{ $3 :: $1 }
 
 set:
 	LBRACK element_list RBRACK		{ List.rev $2 }
 
 edge_list:
 	edge 							{ [$1] }
-	| edge_list SEMI edge 			{ $2 :: $1 }
+	| edge_list SEMICOLON edge 			{ $3 :: $1 }
 
 edge:
 	element COLON element_list
@@ -133,17 +132,21 @@ element_list :
 	element   				{ [$1] }
 	| element_list COMMA element		{ $3 :: $1 }
 
+element:
+	| INTLIT					{ Intlit}
+	| FLOATLIT				{ Floatlit}
+	| STRLIT					{ Strlit}
     
 id_list: ID 					{ [$1]}
 		| ID ASSIGN expr 		{ [($1,$3)] }
         | id_list COMMA ID      { $3 :: $1}
 
-sc_specifier: (*nothing*)
-	| CONST 					{ $1}
-	| STATIC 					{ $1}
-	| RENAME 					{ $1}
+sc_specifier: /* nothing */	
+	| CONST 					{ Const}
+	| STATIC 					{ Static}
+	| RENAME 					{ Rename}
 
-stmt_list: (*nothing*) 			{ []}
+stmt_list: /* nothing */ 			{ []}
  	| stmt_list stmt 			{ $2 :: $1}
 
 
@@ -184,11 +187,10 @@ assgn_op:
 	|MOD_ASSIGN		{ Mod_Assign }
 	|EXP_ASSIGN 		{ Exp_Assign }
 
-expr: VOIDLIT 					{ }
-    | INTLIT              	{ Int($1) }
+expr:  INTLIT              	{ Int($1) }
     | FLOATLIT            	{ Floatlit($1) }
-    | TRUE					{ $1 }
-    | FALSE					{ $1 }
+    | TRUE					{ True }
+    | FALSE					{ False }
     | ID			{ Strlit($1) }
     | STRLIT              	{ Strlit($1) }
     | LPAREN expr RPAREN  	{ $2 }
@@ -206,6 +208,4 @@ expr: VOIDLIT 					{ }
     | expr DIVIDE expr    	{ Binop($1, Div, $3) }
     | expr MODULO expr       	{ Binop($1, Mod, $3) }
     | UNEG expr 		{ Unop(Uneg, $2) }
-    | expr assgn_op expr %prec ASSIGN    	
-
-				      
+    | ID assgn_op expr 				{ Asgn($1,$3)}   		      
