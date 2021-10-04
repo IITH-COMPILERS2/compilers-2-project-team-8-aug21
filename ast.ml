@@ -3,7 +3,15 @@ type operator = Add | Sub | Mul | Div | Mod
 type rop = Eq | Neq | Lt | Ltq | Gt | Gtq 
 type re = And | Or 
 type datatypes = IntType | BoolType | StringType | FloatType
+type storage_class = Const | Static | Rename
 
+type element = IntType | StringType
+
+type set = element list
+type edge =   {
+        vertex : int;
+        nb : element list
+  }
 
 type expr =
     Binop of expr * operator * expr
@@ -13,16 +21,7 @@ type expr =
   | Bool of bool
   | Float of float
   | Asn of string * expr
-  | Equation of string * element list * element list
-  | Balance of molecule list * molecule list
-  | Concat of expr * expr
-  | Print of expr
-  | List of expr list 
-  | Call of string * expr list
-  | Access of expr * string
-  | Bracket of expr
   | Null 
-  | Noexpr
 
 type statement = 
     Block of statement list
@@ -32,40 +31,45 @@ type statement =
   | Loop of expr * expr * expr * statement
   
 
-type vdecl = {
-  vname : string;
-  vtype : datatypes;
+type variable_decl = {
+    sc : storage_class;
+    typ : datatypes ; 
+    vnames : string list; 
 }
-  | set_decl  | matrix_decl | graph_decl
 
 
 type set_decl = {
+  typ   : string;
   sname : string;
   sets  : set list;
 } 
 
 type matrix_decl = {
-  mname : string;
+  typ   : string;
+  mname : variable_decl;
   sets  : set list;
 }
 
 type graph_decl = {
+  typ   : string;
   gname : string;
   edges: edge list;
 }
 
 type par_decl = {
-  pname : string;
-  ptype : datatypes; 
+  sc : storage_class;
+  typ : datatypes ; 
+  vname : string; 
 }
 
 type fdecl = {
+  ret_typ : datatypes;
   fname : string;
-  arguments : par_decl list;
-  locals: variable_decl list;
+  args : par_decl list;
+  local_vars: variable_decl list;
   body : statement list;
 }
 
-type program = decls list
+type decls = fdecl
 
-type decls = fdecl | vdecl
+type program = decls list
