@@ -1,8 +1,19 @@
 Editing
 %{ open Ast 
-	 let parse_error x = (* Called by parser on error *)
-		print_endline x;
-		flush stdout
+let parse_error s =
+      begin
+        try
+          let start_pos = Parsing.symbol_start_pos ()
+          and end_pos = Parsing.symbol_end_pos () in
+          Printf.printf "File \"%s\", line %d, characters %d-%d: \n"
+            start_pos.pos_fname
+            start_pos.pos_lnum
+            (start_pos.pos_cnum - start_pos.pos_bol)
+            (end_pos.pos_cnum - start_pos.pos_bol)
+        with Invalid_argument(_) -> ()
+      end;
+      Printf.printf "Syntax error: %s\n" s;
+      raise Parsing.Parse_error
 %}
 
 %token SEMICOLON COLON LPAREN RPAREN LBRACE RBRACE LBRACK RBRACK COMMA DOT TAG_BEGIN TAG_END
@@ -11,10 +22,10 @@ Editing
 %token IF ELSE LOOP RETURN LINK BREAK CONTINUE CASE DEAULT CONST
 %token INT FLOAT STRING BOOL VOID MATRIX GRAPH NUMSET STRSET STRUCT 
 %token AND OR NOT TRUE FALSE NULL
-%token <bool> BOOLEAN_LITERAL
-%token <string> STRING_L
-%token <int> INTEGER_L
-%token <float> FLOAT_L
+%token <string> ID 
+%token <string> STRLIT
+%token <int> INTLIT
+%token <float> FLOATLIT
 %token EOF
 
 
@@ -39,71 +50,115 @@ Editing
 
 start:
 	(*nothing*)							{	[] }
-	|start fdecl   				{($2 :: $1)}
-	
-	
-fdecl: Type ID LPAREN Args RPAREN LBRACE stmt_list RBRACE 
+	| start decls   				{($2 :: $1)}
+
+decls:
+	| fdecl				{ $1 }
+	| var_decl			{ $1 }
+
+fdecl: typ ID LPAREN args RPAREN LBRACE var_decl_list stmt_list RBRACE 
 	{{
-		Type = $1;
+		ret_typ = $1;
 		fname = $2;
-		args = $4;
+		args = List.rev $4;
+		local_vars = List.rev $7;
+		body = List.rev $8;
 	}}
 
-Args: (*nothing*)			{ } 
-    	| Type ID			{ Type = $1; v_name = $2 }
-	| Type ID COMMA Args
+args: (*nothing*)			{ [] } 
+    	| arg				{ $1}
+		| args COMMA arg   	{ $3 :: $1}
 
-var_decl: Sc_specifier Type id_list SEMICOLON
-	| matrix_decl
-	| graph_decl
-	| set_decl
+arg: sc_specifier typ ID				{{ sc = $1 ;typ = $2; vname = $3 }}
+		
 
-matrix_decl:
-MATRIX MATRIX_LITERAL ASSIGN LBRACK set_list RBRACK
-{{
-	
-}}
+var_decl: sc_specifier typ id_list SEMICOlLON {{ sc = $1 ;typ = $2; vnames = List.rev $3 }}
+	| matrix_decl		{ $1}
+	| graph_decl		{ $1}
+	| set_decl			{ $1}
+
+var_decl_list:	(* nothing *)   { [] }
+  	| var_decl_list vdecl { $2 :: $1 }
+
+
+matrix_decl:	MATRIX ID ASSIGN LBRACK set_list RBRACK		
+			{{
+				type = $1;
+				mname = $2;
+				sets = $5;	
+			}}
 
 set_decl:
-	NUMSET SET_LITERAL ASSIGN LBRACK set RBRACK
-	| STRSET SET_LITERAL ASSIGN LBRACK set RBRACK
+	  NUMSET ID ASSIGN LBRACK set RBRACK
+	{{
+		type = $1;
+		sname = $2;
+		set = $5;
+	}}
+
+	| STRSET ID ASSIGN LBRACK set RBRACK
+	{{
+		type = $1;
+		sname = $2;
+		set = $5;
+	}}
 
 graph_decl:
-	GRAPH GRAPH_LITERAL ASSIGN LBRACK edge_list RBRACK
+	GRAPH ID ASSIGN LBRACK edge_list RBRACK
+	{{
+		type = $1;
+		gname = $2;
+		edges = $5;
+	}}
 
 set_list:
-	 set
-	|set_list COMMA set
+	 set 							{ [$1] }
+	|set_list COMMA set 			{ $2 :: $1 }
 
 set:
-	LBRACK element_list RBRACK
+	LBRACK element_list RBRACK		{ List.rev $2 }
 
 edge_list:
-	edge
-	| edge_list SEMI edge
+	edge 							{ [$1] }
+	| edge_list SEMI edge 			{ $2 :: $1 }
 
 edge:
 	element COLON element_list
+	{{
+		vertex = $1;
+		nb = List.rev $3;
+	}}
 
 element_list : 
 	element   				{ [$1] }
-	| element_list COMMA element		{ ($3 :: $1) }
+	| element_list COMMA element		{ $3 :: $1 }
 
     
-id_list: ID
-	| ID ASSIGN 
-        | id_list COMMA ID
+id_list: ID 					{ [$1]}
+		| ID ASSIGN expr 		{ [($1,$3)] }
+        | id_list COMMA ID      { $3 :: $1}
 
-Sc_specifier: (*nothing*)
-	| CONST 
-	| STATIC 
-	| RENAME 
+sc_specifier: (*nothing*)
+	| CONST 					{ $1}
+	| STATIC 					{ $1}
+	| RENAME 					{ $1}
 
-stmt_list: (*nothing*)
- 	| stmt_list stmt
+stmt_list: (*nothing*) 			{ []}
+ 	| stmt_list stmt 			{ $2 :: $1}
 
 
-Type:    INT | FLOAT | STRING | BOOL | STRUCT | NUMSET | STRSET | GRAPH | MATRIX | VOID | LONG
+
+typ:    INT        { Int           }
+	  | BOOL       { Bool          }
+	  | FLOAT      { Float         }
+	  | VOID       { Void          }
+	  | STRING     { String        }
+	  | STRUCT     { Struct        }
+	  | NUMSET     { Numset		   }
+	  | STRSET 	   { Strset        }
+	  | GRAPH      { Graph         }
+	  | MATRIX     { Matrix        }
+
 
 	
 stmt: expr SEMICOLON				{ Expr $1 }
@@ -112,7 +167,7 @@ stmt: expr SEMICOLON				{ Expr $1 }
 	| RETURN expr SEMICOLON			{ Return $2 }
 	| RETURN SEMICOLON			{ Return }
 	| LBRACE stmt_list RBRACE		{ Block(List.rev $2) }
-    	| IF LPAREN expr RPAREN stmt ELSE stmt 			{ If($3,$5,$7) }
+    | IF LPAREN expr RPAREN stmt ELSE stmt 			{ If($3,$5,$7) }
 	| IF LPAREN expr RPAREN stmt 				{ If($3,$5,Block([]))}
 	| LOOP LPAREN expr SEMICOLON expr RPAREN stmt 		{ Loop($3,$5,$7)}
 	| LOOP LPAREN expr RPAREN stmt   			{ Loop()}
@@ -131,16 +186,11 @@ assgn_op:
 
 expr: VOIDLIT 					{ }
     | INTLIT              	{ Int($1) }
-    | BOOLLIT             	{ Boollit($1) }
-    | LONGLIT		  	{ LongLit($1) }
     | FLOATLIT            	{ Floatlit($1) }
+    | TRUE					{ $1 }
+    | FALSE					{ $1 }
     | ID			{ Strlit($1) }
     | STRLIT              	{ Strlit($1) }
-    | MATRIXLIT			{ MatrixLit($1)}
-    | GRAPHLIT                  { GraphLit($1) }
-    | NUMSETLIT			{ NumsetLit($1) }
-    | STRSETLIT 		{ StrsetLit($1) }
-    | STRUCTLIT			{ StructLit($1) }
     | LPAREN expr RPAREN  	{ $2 }
     | expr EQUAL expr        	{ Binop($1, Equal, $3) }
     | expr NOT_EQUAL expr       { Binop($1, Not_equal, $3) }
@@ -157,20 +207,5 @@ expr: VOIDLIT 					{ }
     | expr MODULO expr       	{ Binop($1, Mod, $3) }
     | UNEG expr 		{ Unop(Uneg, $2) }
     | expr assgn_op expr %prec ASSIGN    	
-	
 
-
-	
-	
-
-
-
-
-    								{
-                                        let f = match $1 with
-                                           Rid(rid) -> Binassop(rid, $2, $3)
-                                           | _        -> raise
-                                           (Parsing.Parse_error)
-                                        in f
-                                      }
 				      
