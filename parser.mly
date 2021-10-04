@@ -50,7 +50,6 @@ start:		/* nothing */							{	[] }
 
 decls:
   | fdecl       { $1 }
-  | var_decl      { $1 }
 
 fdecl: FUNC typ ID LPAREN args RPAREN LBRACE var_decl_list stmt_list RBRACE 
   {{
@@ -62,8 +61,8 @@ fdecl: FUNC typ ID LPAREN args RPAREN LBRACE var_decl_list stmt_list RBRACE
   }}
 
 args: /* nothing */     { [] } 
-      | arg       { $1}
-    | args COMMA arg    { $3 :: $1}
+      | arg       { [$1]}
+      | args COMMA arg    { $3 :: $1}
 
 arg: sc_specifier typ ID        {{ sc = $1 ;typ = $2; vname = $3 }}
     
@@ -149,7 +148,7 @@ typ:    INT        { Int           }
     | STRING     { String        }
     | STRUCT     { Struct        }
     
-
+/*print_endline ""*/
 stmt: expr SEMICOLON        { Expr $1 }
   | BREAK SEMICOLON     { Break   }
   | CONTINUE SEMICOLON      { Continue }
