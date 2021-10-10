@@ -87,9 +87,9 @@ rule token = parse
 | "true"                               { TRUE      }
 | "false"                              { FALSE     }
 | "NULL"                               { NULL      }
-| ['-']?digit+ as lxm                  { INT_L(int_of_string lxm)}
-| ['-']?digit+['.']digit+ as lxm       { FLOAT_L(float_of_string lxm)}
-| '"' (([^ '"'] | "\\\"")* as lxm) '"' { STRING_L(lxm) }
+| ['-']?digit+ as lxm                  { INTLIT(int_of_string lxm)}
+| ['-']?digit+['.']digit+ as lxm       { FLOATLIT(float_of_string lxm)}
+| '"' (([^ '"'] | "\\\"")* as lxm) '"' { STRLIT(lxm) }
 | ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']*  as lxm { ID(lxm) }
 | ['0'-'9' '_']['a'-'z' 'A'-'Z' '0'-'9' '_']*      as lxm { syntax_error (lexbuf) ("Invalid identifier name " ^ lxm) (!linecounter) }
 | eof                                  { EOF }
