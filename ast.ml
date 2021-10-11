@@ -1,31 +1,35 @@
-
-type operator = Add | Sub | Mul | Div | Mod
-type rop = Eq | Neq | Lt | Ltq | Gt | Gtq 
-type re = And | Or 
-type datatypes = IntType | BoolType | StringType | FloatType
+type operator = Add | Sub | Mul | Div | Mod | Equal | Not_equal | Lt | Lte | Gt | Gte | And | Or
+type datatypes = Int | Bool | String | Float | Void | Struct
 type storage_class = Const | Static | Rename
+type neg = Not
 
-type element = IntType | StringType
+type element = Int | String
 
 type set = element list
-type edge =   {
+
+type edge =   { 
         vertex : int;
         nb : element list
   }
 
+type id = ID of string
+
 type expr =
     Binop of expr * operator * expr
-  | Brela of expr * re * expr
   | Int of int
-  | String of string 
-  | Bool of bool
-  | Float of float
-  | Asn of string * expr
+  | Strlit of string 
+  | Floatlit of float
+  | Unop of neg * expr
+  | True
+  | False
+  | Asgn of id * expr
   | Null 
 
 type statement = 
     Block of statement list
   | Expr of expr
+  | Break
+  | Continue
   | Return of expr
   | If of expr * statement * statement
   | Loop of expr * expr * expr * statement
@@ -46,7 +50,7 @@ type set_decl = {
 
 type matrix_decl = {
   typ   : string;
-  mname : variable_decl;
+  mname : string;
   sets  : set list;
 }
 
