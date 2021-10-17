@@ -38,7 +38,7 @@ rule token = parse
 | "#" (letter(letter|digit)* as tag)   { TAG_BEGIN(tag) } 
 | "#!" (letter(letter|digit)* as tag)  { TAG_END(tag)   }   
 (*                 Operators                 *)
-| '!'                                  { UNEG      }
+| '!'                                  { NOT      }
 | "++"                                 { INCR      }
 | "--"                                 { DECR      }
 | "<<"                                 { LSHIFT    }
@@ -73,6 +73,7 @@ rule token = parse
 | "strset"                             { STRSET    }
 | "struct"                             { STRUCT    }
 (*                 Keywords                  *)
+| "def"                                { FUNC      }
 | "link"                               { LINK      }
 | "if"                                 { IF        }
 | "else"                               { ELSE      }
