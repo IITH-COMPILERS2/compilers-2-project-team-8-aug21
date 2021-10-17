@@ -1,75 +1,56 @@
-
-type operator = Add | Sub | Mul | Div | Mod
-type rop = Eq | Neq | Lt | Ltq | Gt | Gtq 
-type re = And | Or 
-type datatypes = IntType | BoolType | StringType | FloatType
-type storage_class = Const | Static | Rename
-
-type element = IntType | StringType
-
-type set = element list
-type edge =   {
-        vertex : int;
-        nb : element list
-  }
+type operator = Add | Sub | Mul | Div | Mod | Equal | Not_equal | Lt | Lte | Gt | Gte | And | Or
+type datatype = Int | Bool | String | Float | Void | Matrix
+type storage_class = Const | Static | Rename | Noexpr | Normal
+type unary_operator = Not  
 
 type expr =
     Binop of expr * operator * expr
-  | Brela of expr * re * expr
+  | Unop of unary_operator * expr
   | Int of int
-  | String of string 
-  | Bool of bool
-  | Float of float
-  | Asn of string * expr
+  | Strlit of string 
+  | Floatlit of float
+  | True
+  | False  
+  | Id of string
+  | Asgn of string * expr
+  | FunCall of string * expr list
+  | MatrixLit of float array array
+  | MatrixRow of string * expr
+  | MatrixPart of string * expr * expr
+  | MatrixModify of string * (expr * expr) * expr
   | Null 
+  | Noexpr
+
+(* storage class, var type, var name, dimensions, defn *)
+type bind = storage_class * datatype * string * (int * int) * expr
 
 type statement = 
     Block of statement list
   | Expr of expr
+  | Break
+  | Continue
   | Return of expr
   | If of expr * statement * statement
-  | Loop of expr * expr * expr * statement
+  | Loop of expr * expr * statement 
   
-
-type variable_decl = {
-    sc : storage_class;
-    typ : datatypes ; 
-    vnames : string list; 
-}
-
-
-type set_decl = {
-  typ   : string;
-  sname : string;
-  sets  : set list;
-} 
-
-type matrix_decl = {
-  typ   : string;
-  mname : variable_decl;
-  sets  : set list;
-}
-
-type graph_decl = {
-  typ   : string;
-  gname : string;
-  edges: edge list;
-}
-
-type par_decl = {
-  sc : storage_class;
-  typ : datatypes ; 
-  vname : string; 
-}
-
 type fdecl = {
-  ret_typ : datatypes;
+  ret_type : datatype;
   fname : string;
-  args : par_decl list;
-  local_vars: variable_decl list;
+  args : bind list;
+  local_vars: bind list;
   body : statement list;
 }
 
-type decls = fdecl
+type program = bind list * fdecl list
 
-type program = decls list
+(* functions for datatype uniformity in parser *)
+
+let check_non_primitive sc_specifier data_type variable_name typ_size expr =
+  match data_type with
+    Matrix -> (sc_specifier, data_type, variable_name, typ_size, expr)
+    | _ -> failwith("Primitive type, only non-primitive types can have a size")
+
+let check_primitive sc_specifier data_type variable_name expr =
+  match data_type with
+    Matrix -> failwith("Non-primitive type: Must assign size.")
+    | _ -> (sc_specifier, data_type, variable_name, (-1, -1), expr)
