@@ -1,0 +1,5 @@
+File Naming Convention for test cases:
+pass_<filename>.tz   -   file that is expected to compile cleanly
+fail_<filename>.tz   -   compiler is expected to throw error with this file
+
+TODO: Add files with expected outputs
