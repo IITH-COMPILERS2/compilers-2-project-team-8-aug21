@@ -2,7 +2,7 @@ open Ast
 
 (* s_expr is formed after type and dimensions of sub expressions are found compatible *)
 type s_expr = (datatype * (int * int)) * chkd_expr
-type chkd_expr = 
+and chkd_expr = 
     S_Binop of s_expr * operator * s_expr
   | S_Unop of unary_operator * s_expr
   | S_Int of int
@@ -38,7 +38,7 @@ type s_statement =
   
 type s_fdecl = {
   s_ret_type : cmpd_typ;
-  s_ret_dim : (int * int)    (* dimensions of return value *)
+  s_ret_dim : (int * int);    (* dimensions of return value *)
   s_fname : string;
   s_args : s_bind list;
   s_local_vars: s_bind list;
