@@ -1,0 +1,628 @@
+commit ef8b89551e55ef602648fddb84ba807d085ccc65
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Wed Nov 3 00:00:45 2021 +0530
+
+    Adding semantic analyzer video and changelog
+
+commit d866046e531f7fd6058f851d47957a997a2916aa
+Merge: 9785361 8eee423
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Tue Nov 2 23:56:31 2021 +0530
+
+    Merge pull request #17 from IITH-COMPILERS2/sravanthi-branch
+    
+    Adding test cases for globals and struct declarations that are expected to pass/fail
+
+commit 8eee42351765987de1b9b17f77d70fcde31dcfe3
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Nov 2 23:52:04 2021 +0530
+
+    Adding test case for globals and struct declarations that is expected to pass
+
+commit 56785ead64057872a98631a2357c83c1aa0affcb
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Nov 2 23:50:49 2021 +0530
+
+    Adding test cases for globals and srtuct declarations that are expected to fail
+
+commit 97853614af4e83e1de2007847fd25a1dbaa96ce2
+Author: Vedika Verma <83752663+Vedika28-code@users.noreply.github.com>
+Date:   Tue Nov 2 23:35:36 2021 +0530
+
+    Add files via upload
+
+commit e2baab4d656d6949d4c679ab62eaff2b5c453a06
+Merge: 0cef431 d36c669
+Author: Suraj G <70639625+Prime-Nemesis@users.noreply.github.com>
+Date:   Tue Nov 2 22:55:03 2021 +0530
+
+    Merge pull request #16 from IITH-COMPILERS2/suraj-branch
+    
+    keyword checking and duplicate checking added
+    
+    Added checking of keywords ( keywords can be used for names of identifiers/ functions)
+    Duplicate checking ( duplicate function name-checking and duplicate local variables checking)
+    
+    Started writing expression checking, statement checking but as it was slightly incomplete it won't compile, (work in progress in local machine)
+
+commit d36c66932e54990877f1e041e45ca3b48ce4aa6f
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Tue Nov 2 22:50:34 2021 +0530
+
+    keyword checking and duplicate checking added
+
+commit 0cef431382a44d300f91a22428052ec354914aff
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Tue Nov 2 20:27:35 2021 +0530
+
+    Changed Int to Intlit
+    
+    Making sure that there is consistency among other types literals.
+
+commit 16f972b50054a92007d4859da2388303e3548039
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Tue Nov 2 20:26:04 2021 +0530
+
+    Update parser.mly
+
+commit 5ae9bc7f5396c65b199c0867dd599b64c76a6f60
+Merge: c1478b2 e8470c3
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Tue Nov 2 17:38:58 2021 +0530
+
+    Merge pull request #15 from IITH-COMPILERS2/sravanthi-branch
+    
+    Basic version of main works now
+
+commit e8470c3b55e3b1fc4a1b19deb194a6f25febcf06
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Nov 2 17:37:05 2021 +0530
+
+    Basic version of main works now
+
+commit c1478b2f21ce24d956bf11541bc60565cdf55b56
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Tue Nov 2 11:33:06 2021 +0530
+
+    Update lexer.mll
+
+commit 803050dde2370ba3e26df689d00c67b7800f612b
+Merge: b26c87a e5c6bb6
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Tue Nov 2 00:41:16 2021 +0530
+
+    Merge pull request #14 from IITH-COMPILERS2/sravanthi-branch
+    
+    Added semantic checks for globals and struct declarations, tested and working
+
+commit e5c6bb69b5f19320328ad50cfc0528dbd8d98d17
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Nov 2 00:36:38 2021 +0530
+
+    Added semantic checks for globals and struct declarations, tested and working
+
+commit fcf99cf2ed3aff83002661a7812f05796057de86
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Nov 2 00:32:09 2021 +0530
+
+    Fixed typos
+
+commit b26c87a548cc56123397ac42dae8c9f9709cd13e
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Fri Oct 29 19:00:51 2021 +0530
+
+    Create main.ml
+
+commit 0c24ba371dc403dc6f9d87bcb7bbcc26404f47de
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Thu Oct 21 11:43:53 2021 +0530
+
+    Update ast.ml
+    
+    Added additional printing functions for AST
+
+commit 61e34cf27227010eac9bb464085256887742f528
+Merge: 058e5cc c54124b
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Tue Oct 19 10:33:07 2021 +0530
+
+    Merge pull request #13 from IITH-COMPILERS2/sravanthi-branch
+    
+    Adding sast.ml
+
+commit c54124b4b95552f5a70de436cc1c73b508f0f266
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Oct 19 10:31:50 2021 +0530
+
+    Adding sast.ml
+
+commit 058e5cc23501dfc89e89069b5a18289e62f65d0e
+Merge: e4766be 3b5d742
+Author: Suraj G <70639625+Prime-Nemesis@users.noreply.github.com>
+Date:   Mon Oct 18 11:36:37 2021 +0530
+
+    Merge pull request #12 from IITH-COMPILERS2/suraj-branch
+    
+    Suraj branch
+
+commit 3b5d74254d4b7853d17fd684a360c061c67f171c
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Mon Oct 18 11:30:00 2021 +0530
+
+    created semanatn.ml file
+
+commit e671c5269de31eab0deec0b59d61ded70f7be38c
+Merge: db4a3a1 e4766be
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Mon Oct 18 10:17:50 2021 +0530
+
+    Merge branch 'main' into suraj-branch
+
+commit e4766beb057b8c8b020107131fba51a5af787076
+Merge: a2f9fd1 342849f
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Sun Oct 17 21:52:05 2021 +0530
+
+    Merge pull request #11 from IITH-COMPILERS2/sravanthi-branch
+    
+    Rewriting parts of parser, ast for struct
+
+commit 342849f9884aadc5987e6fb012bd9a8da2e8fa2f
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Sun Oct 17 21:50:56 2021 +0530
+
+    Rewriting parts of parser, ast for struct
+
+commit db4a3a1ef4874b928090c0c47920859080480857
+Merge: 9e87505 a2f9fd1
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Sun Oct 17 17:30:40 2021 +0530
+
+    Merge branch 'main' into suraj-branch
+
+commit a2f9fd19b2cb03ec228e29708c6f1bd6b28b3271
+Merge: fc087fc 43324f4
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Sun Oct 17 16:03:25 2021 +0530
+
+    Merge branch 'main' of https://github.com/IITH-COMPILERS2/compilers-2-project-team-8-aug21 into main
+
+commit fc087fc4c10546ae5b37637935cd31a24841d11e
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Sun Oct 17 16:01:04 2021 +0530
+
+    Adding directory for test cases
+
+commit 43324f4857980b9486a999b268f830cb94db7a90
+Merge: 9b3bc7d dbfe1f2
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Thu Oct 14 23:01:01 2021 +0530
+
+    Merge pull request #10 from IITH-COMPILERS2/sravanthi-branch
+    
+    Rewriting parts of parser, ast for matrix datatype
+
+commit dbfe1f2312309f6aad88aa1b5bfbbf5f73c2136c
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Thu Oct 14 22:53:31 2021 +0530
+
+    Updated lexer according to parser
+
+commit 7e82c4241f4199435b9a5f56cc7fcb2799d541a5
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Thu Oct 14 22:52:14 2021 +0530
+
+    Rewriting parts of parser, ast for matrix datatype
+
+commit 9b3bc7d44a0d71b08938fa283d2c57b87d3cae1a
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Mon Oct 11 18:15:31 2021 +0530
+
+    Add files via upload
+
+commit 9e875051c33ff4f0208f970399331b19e21e7615
+Merge: bc5050a a4c48da
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Sun Oct 10 11:01:50 2021 +0530
+
+    Merge branch 'main' into suraj-branch
+
+commit a4c48dacf87a8f499f595fbaf5e00e74a408489d
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Fri Oct 8 17:01:15 2021 +0530
+
+    Add files via upload
+
+commit 927fc8be2acab22f4ab0f2ad7f264ad488db4d22
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Tue Oct 5 00:01:15 2021 +0530
+
+    Add files via upload
+
+commit 0fa655bb101f649e6aaf3947894af920e8adb9f9
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Mon Oct 4 23:49:12 2021 +0530
+
+    Update parser.mly
+
+commit b83b5dba956aeda03657a0b127115fe94b0c575d
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Mon Oct 4 23:48:29 2021 +0530
+
+    Delete ast_mod.ml
+
+commit 9e8c187a548ce65b07b8c378f1dc5007fff5fbf1
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Mon Oct 4 23:48:15 2021 +0530
+
+    Update ast.ml
+
+commit 8b864febe53f6b571af4513db78234c62ea2c75b
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Mon Oct 4 23:47:29 2021 +0530
+
+    Add files via upload
+
+commit 8b9291bbebd925dfe14d032f465010a9033704a6
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Mon Oct 4 23:25:00 2021 +0530
+
+    Add files via upload
+
+commit aa80e0615d8a89cc574b3884a720befb0bca66e6
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Mon Oct 4 23:24:22 2021 +0530
+
+    Delete Parser_demo.mp4
+
+commit 82e642040d69981fcf32692e112d3c819d75f09e
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Mon Oct 4 23:19:25 2021 +0530
+
+    Add files via upload
+
+commit 9b646b56a483c9fa867c0956f9050c0dbe0d3aa6
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Mon Oct 4 22:50:19 2021 +0530
+
+    Add files via upload
+
+commit 4d207182b011155d084d6307c9703f7c8c1cceb1
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Mon Oct 4 22:41:20 2021 +0530
+
+    Update parser.mly
+
+commit 0849e250c6280707a0a5b8037c896d5d838bf8d5
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Mon Oct 4 20:36:49 2021 +0530
+
+    Update parser.mly
+
+commit b3a191dcfa6851a1b14071368481ffc3a4911794
+Author: Sharanya Gupta <74424587+shrx11@users.noreply.github.com>
+Date:   Mon Oct 4 19:38:54 2021 +0530
+
+    Create ast.ml
+
+commit 6566a747501657b0229227912027d94dd91cfb4c
+Author: Sharanya Gupta <74424587+shrx11@users.noreply.github.com>
+Date:   Mon Oct 4 19:29:54 2021 +0530
+
+    Update parser.mly
+
+commit d88168c3a51f335ff3929b107859d5580fde3b50
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Mon Oct 4 11:47:06 2021 +0530
+
+    Update lexer.mll
+
+commit 4ae38e37e01a2c4a701f1471e9a9233fe56d1e27
+Author: Sharanya Gupta <74424587+shrx11@users.noreply.github.com>
+Date:   Mon Oct 4 10:21:44 2021 +0530
+
+    Update parser.mly
+
+commit 4f497448de15c26bd751df1f20e4bfd3ac3ac2a5
+Author: Sharanya Gupta <74424587+shrx11@users.noreply.github.com>
+Date:   Sun Oct 3 19:33:58 2021 +0530
+
+    Create parser.mly
+
+commit 651d48718277532a067934e502e99fbb670b92c7
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Sun Sep 26 23:19:02 2021 +0530
+
+    Update parser.mly
+
+commit a9d386293d52944624577d50f9b48207bbcf0ccd
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Mon Sep 20 22:30:02 2021 +0530
+
+    Add files via upload
+
+commit 2c4d55f8bec08604aa5d9d4a6c7ead78ca227104
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Mon Sep 20 22:28:49 2021 +0530
+
+    Delete Lexical Analyser.pdf
+
+commit 03164cae728ae99d346d6fc725ea9bf6fc2335bd
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Mon Sep 20 21:39:47 2021 +0530
+
+    Add files via upload
+
+commit bc5050a47d3143ec3c5e2d77a8181bfc56d7425d
+Merge: d340ae8 8cd03b3
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Mon Sep 20 11:13:47 2021 +0530
+
+    Merge branch 'main' into suraj-branch
+
+commit d340ae8dce76491f51520d857bd5113f314c4ad3
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Sun Sep 19 19:14:38 2021 +0530
+
+    removed long
+
+commit 8cd03b371b6bc2aa5fde674e32edd1456b86bbc5
+Author: sharanya <74424587+shrx11@users.noreply.github.com>
+Date:   Sun Sep 19 13:18:48 2021 +0530
+
+    Update parser.mly
+
+commit ee50c94c0eb18432b65492c44243824f80e1576b
+Merge: 365c32b 3432499
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Wed Sep 15 14:16:56 2021 +0530
+
+    Merge pull request #9 from IITH-COMPILERS2/sravanthi-branch
+    
+    fixed line number and operator issues
+
+commit 3432499cc152150433cc02ee37964519581bd0ce
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Wed Sep 15 14:14:06 2021 +0530
+
+    fixed line numbers and updated operators
+
+commit c6312b3b226a8df269f4871f8c0a724abea87457
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Wed Sep 15 13:55:32 2021 +0530
+
+    fixed line numbers in demo file
+
+commit 32569bdbdd838b04fcaf18f73ba13fdf3aab28b1
+Merge: 102b3a8 365c32b
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Wed Sep 15 12:41:34 2021 +0530
+
+    Merge branch 'main' into sravanthi-branch
+
+commit 365c32bb2f3d267f33dc5a779d38a12e719fb86e
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Wed Sep 15 11:57:38 2021 +0530
+
+    Update parser.mly
+
+commit 976e8c81011f8e6093cda836601681dcbc11d7b8
+Author: Gayala Manoj <65646563+manojgayala@users.noreply.github.com>
+Date:   Wed Sep 15 11:56:49 2021 +0530
+
+    Update parser.mly
+
+commit 102b3a8aea6844ffaa5a5ed0fcbd45c7e25062cc
+Merge: bf19a4d 646c535
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Wed Sep 15 08:48:30 2021 +0530
+
+    Merge branch 'main' into sravanthi-branch
+
+commit 646c5359f45f5cecdf8dd91edde839ebd759dc3c
+Merge: be5c2ac c6f4fac
+Author: Prime-Nemesis <70639625+Prime-Nemesis@users.noreply.github.com>
+Date:   Wed Sep 15 00:00:17 2021 +0530
+
+    Merge pull request #8 from IITH-COMPILERS2/suraj-branch
+    
+    Suraj branch
+
+commit c6f4fac0c22f20eb0b2491a8f11b671624856aa7
+Merge: 5191b7c be5c2ac
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Tue Sep 14 23:58:34 2021 +0530
+
+    Merge branch 'main' into suraj-branch
+
+commit 5191b7cf797c9929513d083f5492fd162af6eba0
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Tue Sep 14 23:52:41 2021 +0530
+
+    fuctionality for all tokens added
+
+commit bf19a4dc2d8387ad8150309802d85a1107a87d5d
+Merge: c54d9ae be5c2ac
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Sep 14 23:31:54 2021 +0530
+
+    Merge branch 'main' into sravanthi-branch
+
+commit be5c2ac29f08dee4282af68e1439de2a2af597b8
+Merge: 18741da 8293170
+Author: Prime-Nemesis <70639625+Prime-Nemesis@users.noreply.github.com>
+Date:   Tue Sep 14 23:24:22 2021 +0530
+
+    Merge pull request #7 from IITH-COMPILERS2/suraj-branch
+    
+    file I/O added
+
+commit 8293170578d83bd970a274079c801f96cda3f4e2
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Tue Sep 14 23:22:57 2021 +0530
+
+    file I/O added
+
+commit 18741da76ed3ac22f4c5e07944dfa08dff84ce8e
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Tue Sep 14 22:23:07 2021 +0530
+
+    Update parser.mly
+
+commit 81964b460b6ec31af5ff41b5d38277e35ed39a28
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Tue Sep 14 21:55:23 2021 +0530
+
+    Delete parser.mll
+
+commit 7629951e07e5044a868282ef2ad717ffddcd06ad
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Tue Sep 14 21:55:13 2021 +0530
+
+    Create parser.mly
+
+commit 5ea4faf0249ab1902a4df9ff84f3f9727b154053
+Author: Nisha0212 <68599027+Nisha0212@users.noreply.github.com>
+Date:   Tue Sep 14 21:43:42 2021 +0530
+
+    Create parser.mll
+
+commit c54d9ae14e480558941a24d4e3fa39a7cb805848
+Merge: e8ad8dc aa833c5
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Sep 14 21:10:34 2021 +0530
+
+    Merge branch 'main' into sravanthi-branch
+
+commit aa833c51c9adbe2be645cd999b3a509bc1957016
+Merge: 0e538fb 31f3ee9
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Tue Sep 14 21:08:56 2021 +0530
+
+    Merge pull request #6 from IITH-COMPILERS2/sravanthi-branch
+    
+    adding file for demo video purposes
+
+commit e8ad8dcf2d0ebce1c3aa2627b6cbb01e7c79b635
+Merge: 31f3ee9 0e538fb
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Sep 14 21:04:53 2021 +0530
+
+    Merge branch 'main' into sravanthi-branch
+
+commit 31f3ee96d159949d010af3680cdf445de38fe57b
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Sep 14 21:02:47 2021 +0530
+
+    updated demofile with recent changes
+
+commit ec7f6e4fd55ed3173f9dbe436841df125c995934
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Sep 14 20:56:09 2021 +0530
+
+    created separate folder for demo video purposes
+
+commit 0e538fbb425cbab909172a09ef98de38691e6f41
+Author: sharanya <74424587+shrx11@users.noreply.github.com>
+Date:   Tue Sep 14 19:27:41 2021 +0530
+
+    Update lexer.mll
+
+commit 7becbef9fdb1085e66aab4d883d01fc78b752439
+Merge: 1a77b13 ee5b263
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Tue Sep 14 18:34:14 2021 +0530
+
+    Merge pull request #5 from IITH-COMPILERS2/sravanthi-branch
+    
+    added error handling
+
+commit ee5b26380b6401e269c5f41f09bdf9321820f209
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Tue Sep 14 18:26:33 2021 +0530
+
+    added error handling
+
+commit 1a77b13edf874fb72c256f388c358021c33a673b
+Merge: 61caa79 2bae400
+Author: Prime-Nemesis <70639625+Prime-Nemesis@users.noreply.github.com>
+Date:   Mon Sep 13 22:52:09 2021 +0530
+
+    Merge pull request #4 from IITH-COMPILERS2/suraj-branch
+    
+    almost finishing lexer
+
+commit 2bae400373a47ebc8e0b61e9e3bcb0a474036a21
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Mon Sep 13 22:49:19 2021 +0530
+
+    finishing
+
+commit 61caa794719c017193874d67f9b737ec1484efd8
+Merge: 53a2d5a 15517fa
+Author: Prime-Nemesis <70639625+Prime-Nemesis@users.noreply.github.com>
+Date:   Mon Sep 13 22:06:31 2021 +0530
+
+    Merge pull request #3 from IITH-COMPILERS2/suraj-branch
+    
+    added rest of sections and literals pending
+
+commit 15517fab19c22117d1f773902727d82863aac04c
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Mon Sep 13 20:26:36 2021 +0530
+
+    added rest of sections and literals pending
+
+commit 53a2d5abc67c73122f1b6255049ff54bc03f2564
+Merge: 251c14b aac149b
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Mon Sep 13 15:49:32 2021 +0530
+
+    Merge pull request #2 from IITH-COMPILERS2/sravanthi-branch
+    
+    adding definitions
+
+commit aac149bea0f979f5121d877edeeda14eb328fb9b
+Author: sravanthiM1 <es19btech11007@iith.ac.in>
+Date:   Mon Sep 13 15:42:45 2021 +0530
+
+    adding definitions
+
+commit 251c14b222965c3571d3bc8f8e93619871dd096b
+Merge: 7e04a6e 9c57be6
+Author: Prime-Nemesis <70639625+Prime-Nemesis@users.noreply.github.com>
+Date:   Mon Sep 13 11:15:48 2021 +0530
+
+    Merge pull request #1 from IITH-COMPILERS2/suraj-branch
+    
+    creation of lexer file
+
+commit 9c57be640a074db0ce2d91f4b9268d4158d05502
+Author: Prime-Nemesis <surajg2002@gmail.com>
+Date:   Mon Sep 13 10:57:46 2021 +0530
+
+    creation of lexer file
+
+commit 7e04a6e08f5fe154946bd7d577a0a540bc02ec5b
+Author: sharanya <74424587+shrx11@users.noreply.github.com>
+Date:   Tue Sep 7 23:14:20 2021 +0530
+
+    Delete Specifications.md
+
+commit 1264d9d74cdb5eb4b6069d9dd01488d0e08fef52
+Author: sravanthiM1 <74587197+sravanthiM1@users.noreply.github.com>
+Date:   Tue Sep 7 23:12:57 2021 +0530
+
+    Adding language specifications document
+
+commit df4f9c0689613b87522940967ea7c9f7c45c1996
+Author: sharanya <74424587+shrx11@users.noreply.github.com>
+Date:   Tue Sep 7 23:12:07 2021 +0530
+
+    Rename Specifications.pdf to Specifications.md
+
+commit c587053a0f73176260f36e814b668a6061415f19
+Author: sharanya <74424587+shrx11@users.noreply.github.com>
+Date:   Tue Sep 7 23:11:22 2021 +0530
+
+    Create Specifications.pdf
