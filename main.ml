@@ -1,31 +1,30 @@
 exception InvalidProg
 exception NoInputFile
 open Printf
+open Lexing
+open Lexer
+open Parser
+open Semant
 
 let usage = Printf.sprintf("Syntax to compile: <filename>")
 
-let prog_name source_path = 
-	let directories = (Str.split (Str.regexp_string("/")) source_path) in
-	let file = List.nth path ((List.length directories) - 1) in
-	let prog = (Str.split (str.regexp_string ".") file) in 
-				List.nth prog ((List.length prog) - 2)
+let main () = begin
 
+	(* try *)
 
-let main () = 
+		let prog_name = 
+			    if (Array.length Sys.argv) = 2 then 
+						Sys.argv.(1)
+				  else
+				   	raise (Failure ("Please provide a Tureasy file (extension .tz) as input") )
+		in
 
-	try
-
-		let prog_name = if Array.length Sys.argv > 1 then
-							prog_name Sys.argv.(1)
-				   else
-				   			raise NoInputFile in
-
-		let input = open_in Sys.argv.(1) in
-
+		let input = open_in prog_name in
 		let lex_buffer = Lexing.from_channel input in 
-		let prog = Parser.start Lexer.tokens lex_buffer in 
+		let prog = Parser.start Lexer.token lex_buffer in 
+		  Semant.semantic_check prog 
 
-		if Semantic.check_program prog 
+(* 		if Semant.semantic_check prog 
 			then Compile.program prog prog_name
 		else
 			raise InvalidProg 
@@ -33,7 +32,9 @@ let main () =
 			with
 			| NoInputFile -> ignore Printf.printf("Please provide a Tureasy file in input\n"); exit 1
 			| InvalidProg -> ignore Printf.printf("Invalid program. Semantic errors present in program\n"); exit 1
-		| End_of_file -> printf "End of File!!"; exit 1
+		| End_of_file -> printf "End of File!!"; exit 1 *)
 
 
-let _ = Printexc.print main ()
+(* let _ = Printexc.print main () *)
+end;;
+main() ;;
