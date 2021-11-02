@@ -1,0 +1,10 @@
+int a;
+float a;
+
+def void main ()
+{
+    int b;
+    
+    return;
+}
+
