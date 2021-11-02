@@ -1,6 +1,7 @@
 (* Lexer file in OCamllex for Tureasy *)
 
 {
+    open Lexing
     open Parser
     open Printf      (* error reporting *)
 
