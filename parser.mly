@@ -148,7 +148,7 @@ stmt_list: /* nothing */                         { [] }
   | stmt_list stmt                               { $2::$1 }  
 
 /* TODO: update other operators and unary minus, etc. */
-expr:  INTLIT                                    { Int($1) }
+expr:  INTLIT                                    { Intlit($1) }
   | FLOATLIT                                     { Floatlit($1) }
   | TRUE                                         { True  }
   | FALSE                                        { False }
