@@ -65,9 +65,53 @@ let semantic_check program =
       5.                      - no duplicate field names 
   *)
   
+  (* check for functions *)
+  let keywords_builtin = Array.to_list
+  [|
+    "print";      
+    (* more keywords to add *)
+  |]
+  in
+
+  List.iter (fun fname ->
+  if List.mem fname (List.map (fun fd -> fd.fname) funcs)
+  then raise (Failure ("Function " ^ fname ^ " cannot be defined, it is built-in"))
+  ) keywords_builtin;
+
+  check_duplicate (fun name -> "Duplicate function " ^ name )
+  (List.map (fun fd -> fd.fname) funcs);
 
 
-  (* Check functions *)
+  let built_in_decls = StringMap.empty in
+
+  let func_decls = List.fold_left (fun map fd -> StringMap.add fd.fname fd map)
+                      built_in_decls funcs 
+  in
+
+  let func_decl f = try StringMap.find f func_decls
+    with Not_found -> raise (Failure ("Unknown function " ^ f ^ " call"))
+  in
+
+  (* main has to be there in every program *)
+  let _ = func_decl "main" in
+
+  let semantic_check_func func = 
+
+    List.iter (check_for_void (fun arg -> "Illegal void arguments " ^ arg ^ 
+      " in " ^ func.fname)) func.args;
+
+    check_duplicate (fun arg -> "Duplicate arguments " ^ arg ^ " in " ^ func.fname)
+    (List.map thirdoffive func.args);
+
+    List.iter (check_for_void (fun local -> "Illegal void locals " ^ local ^
+      " in" ^ func.fname)) func.local_vars;
+
+    check_duplicate (fun local -> "Duplicate locals " ^ local ^ " in " ^ func.fname)
+    (List.map thirdoffive func.local_vars);
+
+in
+List.iter semantic_check_func funcs
   
-    (* Check expresssions *)
+    (* above is also working code with more deatiled checking yet to be written*)
 
+    (* above does keyword checking, duplicate function/ variables checking *)
