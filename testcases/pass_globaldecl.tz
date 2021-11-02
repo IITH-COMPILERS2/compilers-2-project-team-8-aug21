@@ -1,0 +1,14 @@
+int a;
+
+struct x {
+    int b;
+    float c;
+}
+
+def void main ()
+{
+    int b;
+    
+    return;
+}
+
