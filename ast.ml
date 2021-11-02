@@ -9,7 +9,7 @@ type unary_operator = Not
 type expr =
     Binop of expr * operator * expr
   | Unop of unary_operator * expr
-  | Int of int
+  | Intlit of int
   | Strlit of string 
   | Floatlit of float
   | True
@@ -113,7 +113,7 @@ let print_storage_class = function
     | Normal -> ""  
 
 let rec print_expr_string = function
-  Int(l) -> string_of_int l
+  Intlit(l) -> string_of_int l
   | Floatlit(l) -> string_of_float l
   | True -> "true"
   | False -> "false"
