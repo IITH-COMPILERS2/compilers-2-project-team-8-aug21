@@ -4,7 +4,7 @@ type cmpd_typ = (* uniform for structs and other datatypes *)
     Datatype of datatype
   | Struct of string
 type storage_class = Const | Static | Rename | Noexpr | Normal
-type unary_operator = Not  
+type unary_operator = Not  | Neg
 
 type expr =
     Binop of expr * operator * expr
@@ -102,7 +102,7 @@ let print_oper = function
 
 
 let print_uoper = function
-  (* Neg -> "-" *)
+    Neg -> "-"
   | Not -> "!"
 
 let print_storage_class = function
@@ -183,4 +183,4 @@ let string_of_vdecl (s,t, id,_,expr) = print_storage_class s ^ print_cmpdtyp_inf
       and structs = program.structs in
       String.concat "" (List.map string_of_vdecl vars) ^ "\n" ^
       String.concat "" (List.map string_of_struct_decl structs) ^ "\n" ^
-      String.concat "\n" (List.map string_of_fdecl funcs)  
+      String.concat "\n" (List.map string_of_fdecl funcs)

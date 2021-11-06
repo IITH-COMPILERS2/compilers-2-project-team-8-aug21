@@ -37,7 +37,7 @@ let parse_error s =
 %left GT GTE LT LTE
 %left PLUS MINUS
 %left MULTIPLY DIVIDE MODULO
-%right NOT
+%right NOT NEG
 %nonassoc LPAREN RPAREN
 
 %start start
@@ -157,8 +157,8 @@ expr:   INTLIT                                   { Intlit($1) }
   | TRUE                                         { True  }
   | FALSE                                        { False }
   | NULL                                         { Null  }
+  | ID                                           { Id($1) }
   | STRLIT                                       { Strlit($1) }
-  | ID                                           { Strlit($1) }
   | LPAREN expr RPAREN                           { $2 }
   | expr EQUAL expr                              { Binop($1, Equal, $3) }
   | expr NOT_EQUAL expr                          { Binop($1, Not_equal, $3) }
@@ -173,7 +173,8 @@ expr:   INTLIT                                   { Intlit($1) }
   | expr MULTIPLY expr                           { Binop($1, Mul, $3) }
   | expr DIVIDE expr                             { Binop($1, Div, $3) }
   | expr MODULO expr                             { Binop($1, Mod, $3) }
-  | NOT expr                                     { Unop(Not,$2) }
+  | MINUS expr %prec NEG                         { Unop(Neg, $2)      }
+  | NOT expr                                     { Unop(Not,$2)       }
   | LBRACK matrix_lit RBRACK                     { MatrixLit($2) }
   | ID LBRACK expr RBRACK                        { MatrixRow($1, $3) }
   | ID LBRACK expr COMMA expr RBRACK             { MatrixElem($1, $3, $5) }  
@@ -213,5 +214,3 @@ matrix_lit_row:
 matrix_lit_part:
   | LBRACK matrix_lit_row RBRACK COMMA LBRACK matrix_lit_row RBRACK { [|$2; $6|] }
   | matrix_lit_part COMMA LBRACK matrix_lit_row RBRACK { Array.append $1 [|$4|] }
-
-
