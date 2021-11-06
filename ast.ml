@@ -34,8 +34,8 @@ type bind = storage_class * cmpd_typ * string * (int * int) * expr
 type statement = 
     Block of statement list
   | Expr of expr
-  | Break
-  | Continue
+  | Break of expr
+  | Continue of expr
   | Return of expr
   | If of expr * statement * statement
   | Loop of expr * expr * statement 
@@ -155,8 +155,8 @@ let rec print_stmt_string = function
   | If(e, s, Block([])) -> "if (" ^ print_expr_string e ^ ")\n" ^ print_stmt_string s
   | If(e, s1, s2) ->  "if (" ^ print_expr_string e ^ ")\n" ^  print_stmt_string s1 ^ "else\n" ^ print_stmt_string s2
   | Loop(e1, e2, s) -> "loop (" ^ print_expr_string e1  ^ " ; " ^ print_expr_string e2 ^ " ; " ^ ") " ^ print_stmt_string s
-  | Break -> "break"
-  | Continue -> "continue"
+  | Break(e) -> "break" ^ print_expr_string e
+  | Continue(e) -> "continue" ^ print_expr_string e
   
 
 let string_of_vdecl (t, id) = print_cmpdtyp_info t ^ " " ^ id ^ ";\n"
