@@ -133,27 +133,32 @@ sc_specifier: /* nothing */                      { Normal }
   | RENAME                                       { Rename }
 
 /* ------------- Statements and Expressions ------------- */
-stmt: expr SEMICOLON                             { Expr $1   }
-  | BREAK SEMICOLON                              { Break     }
-  | CONTINUE SEMICOLON                           { Continue  }
+stmt: expr SEMICOLON                             { Expr $1         }
+  | BREAK SEMICOLON                              { Break Noexpr    }
+  | CONTINUE SEMICOLON                           { Continue Noexpr }
   | RETURN expr SEMICOLON                        { Return $2 }
   | RETURN SEMICOLON                             { Return Noexpr }
   | LBRACE stmt_list RBRACE                      { Block(List.rev $2) }
   | IF LPAREN expr RPAREN stmt ELSE stmt         { If($3,$5,$7) }
   | IF LPAREN expr RPAREN stmt                   { If($3,$5,Block([]))}
-  | LOOP LPAREN expr SEMICOLON expr RPAREN stmt  { Loop($3,$5,$7)}
+  | LOOP LPAREN expr SEMICOLON expr_opt RPAREN stmt  { Loop($3,$5,$7)}
   | LOOP LPAREN expr RPAREN stmt                 { Loop($3,Null,$5)}
 
 stmt_list: /* nothing */                         { [] }
   | stmt_list stmt                               { $2::$1 }  
 
+expr_opt:
+        /* nothing */   { Noexpr }
+  | expr                { $1 }
+
 /* TODO: update other operators and unary minus, etc. */
-expr:  INTLIT                                    { Intlit($1) }
+expr:   INTLIT                                   { Intlit($1) }
   | FLOATLIT                                     { Floatlit($1) }
   | TRUE                                         { True  }
   | FALSE                                        { False }
-  | ID                                           { Strlit($1) }
+  | NULL                                         { Null  }
   | STRLIT                                       { Strlit($1) }
+  | ID                                           { Strlit($1) }
   | LPAREN expr RPAREN                           { $2 }
   | expr EQUAL expr                              { Binop($1, Equal, $3) }
   | expr NOT_EQUAL expr                          { Binop($1, Not_equal, $3) }
