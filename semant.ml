@@ -291,4 +291,3 @@ let semantic_check program =
 
   in
   List.iter semantic_check_func funcs  
-
