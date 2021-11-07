@@ -21,6 +21,9 @@ let check_duplicate errormsg lst =
 (* redundant, merge later *)
 let thirdoffive = function 
   (_,_,y,_, _) -> y
+  
+let secondoffive = function 
+  (_,y,_,_, _) -> y
 
 let rec contains z = function
     [] -> false
@@ -52,6 +55,13 @@ let check_assign lval rval ex =
     else raise (Failure ("Illegal assignment of " ^ print_cmpdtyp_info lval ^
                   " = " ^ print_cmpdtyp_info rval ^ " in " ^
                   print_expr_string ex))
+                  
+                  
+ let get_struct_member_type struct_decl member errormsg =
+  try
+    let member_bind = List.find (fun (_,_,n,_, _) -> n = member) struct_decl.members
+    in secondoffive member_bind  (* return the typ *)
+  with Not_found -> raise (Failure errormsg)
 
 
 
@@ -188,6 +198,18 @@ let semantic_check program =
                                                           raise (Failure ("Expected matrix type, but found '" ^ m_id ^ "' which is declared as type " 
                                                                           ^ print_cmpdtyp_info (identifier_type m_id)));
                                                         check_assign (Datatype(Float)) (expr a_ex) m_ex
+                                                        
+      | StructAccess (name, member) -> ignore(identifier_type name); (*check it's declared *)
+          let s_decl = get_struct_decl name in (* get the ast struct_decl type *)
+          get_struct_member_type s_decl member
+          ("Illegal struct member access: " ^ name  ^ "." ^ member)
+
+      | StructAsgn (name, member, e) as ex ->  (* TODO: add illegal assign test *)
+          let t = expr e and struct_decl = get_struct_decl name in
+          let member_t = get_struct_member_type struct_decl member
+              ("Illegal struct member access: " ^ name  ^ "." ^ member) in
+          check_assign member_t t ex
+         
       | Binop (e1,op,e2) as ex -> 
         let typ1 = expr e1 and
         typ2 = expr e2 in 
@@ -240,11 +262,7 @@ let semantic_check program =
                                           print_expr_string e ^ " but got " ^ print_cmpdtyp_info typ))))
               fd.args arg_list;
               fd.ret_type
-
-       (* Struct related
-          Matrix related
-          expression checking is pending 
-                                          *)       
+ 
     in
 
 
