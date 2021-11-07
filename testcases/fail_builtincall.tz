@@ -1,0 +1,10 @@
+def void print (int a)
+{
+    int x;
+    return 0;
+}
+
+def int main()
+{
+    print(10);
+}
