@@ -161,6 +161,33 @@ let semantic_check program =
         let left = identifier_type var
         and right = expr e in
         check_assign left right cmpd
+      | MatrixLit m as m_expr -> let row_size = Array.length(m.(0)) in
+                          let check_length l = 
+                            if Array.length(l) != row_size then 
+                              raise (Failure ("All rows must have same number of elements in matrix literal: " ^ print_expr_string m_expr)) 
+                          in
+                          Array.iter check_length m; 
+                          Datatype(Matrix)
+      | MatrixElem(m_id,ridx,cidx) as m_elem -> if (expr ridx) <> Datatype(Int) then 
+                                                  raise (Failure ("Index of matrix expected to be an integer, but found '" ^ print_expr_string ridx 
+                                                                   ^ "' which has type  " ^ print_cmpdtyp_info (expr ridx)))
+                                                else if (expr cidx) <> Datatype(Int) then 
+                                                  raise (Failure ("Index of matrix expected to be an integer, but found '" ^ print_expr_string ridx 
+                                                  ^ "' which has type  " ^ print_cmpdtyp_info (expr ridx)))
+                                                else if (identifier_type m_id) <> Datatype(Matrix) then
+                                                  raise (Failure ("Expected matrix type, but found '" ^ m_id ^ "' which is declared as type " 
+                                                                  ^ print_cmpdtyp_info (identifier_type m_id)));
+                                                Datatype(Float)
+      | MatrixModify(m_id,(ridx,cidx),a_ex) as m_ex ->  if (expr ridx) <> Datatype(Int) then 
+                                                          raise (Failure ("Index of matrix expected to be an integer, but found '" ^ print_expr_string ridx 
+                                                                          ^ "' which has type  " ^ print_cmpdtyp_info (expr ridx)))
+                                                        else if (expr cidx) <> Datatype(Int) then 
+                                                          raise (Failure ("Index of matrix expected to be an integer, but found '" ^ print_expr_string ridx 
+                                                          ^ "' which has type  " ^ print_cmpdtyp_info (expr ridx)))
+                                                        else if (identifier_type m_id) <> Datatype(Matrix) then
+                                                          raise (Failure ("Expected matrix type, but found '" ^ m_id ^ "' which is declared as type " 
+                                                                          ^ print_cmpdtyp_info (identifier_type m_id)));
+                                                        check_assign (Datatype(Float)) (expr a_ex) m_ex
       | Binop (e1,op,e2) as ex -> 
         let typ1 = expr e1 and
         typ2 = expr e2 in 
