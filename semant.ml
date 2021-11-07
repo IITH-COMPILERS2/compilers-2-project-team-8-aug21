@@ -45,7 +45,7 @@ let check_duplicate_fields errormsg = function
 
 let rec check_assign_stmt lval rval =
   match (lval, rval) with
-      (Datatype(p1),Datatype(p2)) -> if p1 = p2 then true else false
+      (Datatype(p1),Datatype(p2)) -> if (p1 = p2 || (p1 = Int && p2 = Float) || (p1 = Float && p2 = Int)) then true else false
     | (Struct(s1), Struct(s2)) -> if s1 = s2 then true else
         (print_endline (s1 ^ s2); false)
     | _ -> false
@@ -55,7 +55,6 @@ let check_assign lval rval ex =
     else raise (Failure ("Illegal assignment of " ^ print_cmpdtyp_info lval ^
                   " = " ^ print_cmpdtyp_info rval ^ " in " ^
                   print_expr_string ex))
-                  
                   
  let get_struct_member_type struct_decl member errormsg =
   try
@@ -216,9 +215,17 @@ let semantic_check program =
         let res = match (typ1,typ2) with (Datatype(t1), Datatype(t2)) -> (
         let operand_type = 
                       match op with 
-                        Add | Sub | Mul | Div | Equal | Not_equal when (t1 = t2) && (t1 = Int || t1 = Float || t1 = String ) -> t1
+                          Add when (t1 = Int && t2 = Float) || (t1 = Float && t2 = Int) || 
+                                   ((t1 = t2) && (t1 = Int || t1 = Float || t1 = String )) -> t1
+                        | Mul when (t1 = Int && t2 = Float) || (t1 = Float && t2 = Int) || 
+                                   ((t1 = t2) && (t1 = Int || t1 = Float)) -> t1
+                        | Sub | Div when (t1 = Int && t2 = Float) || (t1 = Float && t2 = Int) || 
+                                         ((t1 = t2) && (t1 = Int || t1 = Float)) -> t1
                         | Mod when (t1 = t2) && (t1 = Int) -> t1
-                        | Lt | Lte | Gt | Gte when (t1 = t2) && (t1 = Float || t1 = Int) -> Bool
+                        | Equal | Not_equal when (t1 = Int && t2 = Float) || (t1 = Float && t2 = Int) || 
+                                                 ((t1 = t2) && (t1 = Int || t1 = Float || t1 = String)) -> Bool
+                        | Lt | Lte | Gt | Gte when (t1 = Int && t2 = Float) || (t1 = Float && t2 = Int) || 
+                                                   ((t1 = t2) && (t1 = Int || t1 = Float)) -> Bool
                         | And | Or when (t1 = t2) && (t1 = Bool) -> Bool
                         | _ -> raise (Failure ("Illegal binary operator " ^ print_cmpdtyp_info typ1 ^ " " ^ 
                                       print_oper op ^ " " ^ print_cmpdtyp_info typ2 ^
