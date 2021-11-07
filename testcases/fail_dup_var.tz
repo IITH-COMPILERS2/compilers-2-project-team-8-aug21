@@ -1,0 +1,6 @@
+def int main(int a)
+{
+    int x1 = 5;
+    int x1 = 10;
+    return 0;
+}
