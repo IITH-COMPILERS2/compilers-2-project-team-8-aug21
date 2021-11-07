@@ -99,7 +99,7 @@ let semantic_check program =
     if List.mem fname (List.map (fun fd -> fd.fname) funcs)
     then raise (Failure ("Function " ^ fname ^ " cannot be defined, it is built-in"))
   ) keywords_builtin;
-  (* check for duplicate function names as we don't support function overloading*)
+  (*check for duplicate function names as we don't support function overloading*)
   check_duplicate (fun name -> "Duplicate function " ^ name )
     (List.map (fun fd -> fd.fname) funcs);
 
