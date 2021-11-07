@@ -1,0 +1,12 @@
+struct dem{
+    int i;
+    float j;
+        
+}
+
+def void main()
+{   
+    struct dem d;
+    d.i="hello";
+    return ;
+}
