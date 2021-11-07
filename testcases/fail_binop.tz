@@ -5,7 +5,6 @@ def void foo (int a)
     print(x);
     return;
 }
-
 def void main()
 {
     int a=10;
