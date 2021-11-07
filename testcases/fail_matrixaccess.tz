@@ -1,0 +1,9 @@
+def void main()
+{   
+    matrix m<3,3>;
+    string n;
+    m = [[1.0,0,0],[0,1,0],[0,0,1]]; 
+    n[1,2] = 1.5;
+    
+    return;
+}

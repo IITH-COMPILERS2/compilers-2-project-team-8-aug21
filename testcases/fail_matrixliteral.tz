@@ -1,0 +1,7 @@
+def void main()
+{   
+    matrix m<3,3>;
+    m = [[1.0,0,0],[0,1,0],[0,0]]; 
+    
+    return;
+}
