@@ -255,7 +255,7 @@ let semantic_check program =
       corresponding Funcall must be added here  *)
 
       (* Example Funcall for print *)
-
+      (*TODO: argument mismatch while var decls *)
       | FunCall ("print",_) -> Datatype(Int) 
       | FunCall ("print",_) -> Datatype(String)
       | FunCall (fn,arg_list) as call ->
